@@ -1,46 +1,63 @@
-import './App.css';
+import './css/materialize.min.css';
+import './css/App.css';
+import React from 'react'
 import {observer} from 'mobx-react';
+import {runInAction} from 'mobx';
 import UserStore from './stores/UserStore';
 import LoginForm from './components/LoginForm';
-import SubmitButton from './components/SubmitButton';
-import React from 'react'
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import Content from './components/Content';
 class App extends React.Component {
+  constructor(){
+    super();
+    this.state={
+      option:'Dashboard'
+    }
+  }
   async componentDidMount() {
     try{
       let res =await fetch('/isLoggedIn',{
-        methon: 'post',
+        method: 'post',
         headers: {
           'Accept': 'application/json',
-          'content-Type': 'application/json'
+          'Content-Type': 'application/json'
         }
       });
 
       let result = await res.json();
       if(result && result.success){
-        UserStore.loading=false;
-        UserStore.isLoggedIn=true;
-        UserStore.userName=result.userName;
+        runInAction(() => {
+          UserStore.loading=false;
+          //UserStore.isLoggedIn=true;
+          UserStore.userName=result.userName;
+        });
+        
       }else{
-        UserStore.loading=false;
-        UserStore.inloaded=false;
+        runInAction(() => {
+          UserStore.loading=false;
+          //UserStore.isloaded=false;
+        });
       }
     }catch(e){
-      UserStore.loading=false;
-      UserStore.isloggedIn=false;
+      runInAction(() => {
+        UserStore.loading=false;
+        //UserStore.isloggedIn=false;
+      });
     }
   }
 
   async doLogout() {
     try{
       let res =await fetch('/logout',{
-        methon: 'post',
+        method: 'post',
         headers: {
           'Accept': 'application/json',
-          'content-Type': 'application/json'
+          'Content-Type': 'application/json'
         }
       });
 
-      let result = await res.json();
+      var result = await res.json();
       if(result && result.success){
         UserStore.isLoggedIn=false;
         UserStore.username='';
@@ -48,6 +65,12 @@ class App extends React.Component {
     }catch(e){
       console.log(e);
     }
+  }
+
+  setContent=(choice)=>{
+    this.setState({
+      option:choice
+    });
   }
   
   render() {
@@ -63,9 +86,10 @@ class App extends React.Component {
       if(UserStore.isloggedIn){
         return (
           <div className="App">
+          <Navbar/>
             <div className="container">
-              welcome {UserStore.username}
-              <SubmitButton text={'Log Out'} disabled={false} onClick={()=>this.doLogout()}/>
+            <Sidebar setContent={this.setContent} choice={this.state.option}/>
+            <Content option={this.state.option} logout={this.doLogout}/>
             </div>
         </div>
         );
