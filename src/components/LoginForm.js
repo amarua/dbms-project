@@ -3,6 +3,7 @@ import React from 'react';
 import UserStore from '../stores/UserStore';
 import SubmitButton from './SubmitButton';
 import {runInAction} from 'mobx';
+import {observer} from 'mobx-react';
 class LoginForm extends React.Component {
   constructor(props){
     super(props);
@@ -39,10 +40,12 @@ class LoginForm extends React.Component {
       });
 
       let result = await res.json();
+      //console.log(result);
       if(result && result.success){
-        runInAction(()=>{
+        runInAction(()=> {
+          UserStore.username=this.state.username;
           UserStore.isLoggedIn=true;
-          UserStore.username=result.username;
+          this.props.setStatus(true);
         });
       }else if(result && result.success===false){
         runInAction(()=>{
@@ -50,7 +53,7 @@ class LoginForm extends React.Component {
           UserStore.username='';
           UserStore.isLoggedIn=true;
         });
-        alert(result.msg);
+        //alert(result.msg);
       }
     }catch(e){
       runInAction(()=>{
@@ -59,7 +62,7 @@ class LoginForm extends React.Component {
         UserStore.isLoggedIn=true;
       });
       console.log(e);
-      alert("something went wrong");
+      //alert("something went wrong");
     }
   }
 

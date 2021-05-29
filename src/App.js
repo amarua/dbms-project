@@ -12,7 +12,8 @@ class App extends React.Component {
   constructor(){
     super();
     this.state={
-      option:'Dashboard'
+      option:'Dashboard',
+      isLoggedIn:UserStore.isLoggedIn
     }
   }
   async componentDidMount() {
@@ -29,25 +30,25 @@ class App extends React.Component {
       if(result && result.success){
         runInAction(() => {
           UserStore.loading=false;
-          //UserStore.isLoggedIn=true;
+          UserStore.isLoggedIn=true;
           UserStore.userName=result.userName;
         });
         
       }else{
         runInAction(() => {
           UserStore.loading=false;
-          //UserStore.isloaded=false;
+          UserStore.isloaded=false;
         });
       }
     }catch(e){
       runInAction(() => {
         UserStore.loading=false;
-        //UserStore.isloggedIn=false;
+        UserStore.isloggedIn=false;
       });
     }
   }
 
-  async doLogout() {
+  doLogout= async ()=> {
     try{
       let res =await fetch('/logout',{
         method: 'post',
@@ -61,6 +62,9 @@ class App extends React.Component {
       if(result && result.success){
         UserStore.isLoggedIn=false;
         UserStore.username='';
+        this.setState({
+          isLoggedIn:UserStore.isLoggedIn
+        });
       }
     }catch(e){
       console.log(e);
@@ -71,6 +75,11 @@ class App extends React.Component {
     this.setState({
       option:choice
     });
+  }
+  setStatus =(value)=>{
+    this.setState({
+      isloggedIn:true
+    })
   }
   
   render() {
@@ -83,7 +92,7 @@ class App extends React.Component {
       </div>
       );
     }else{
-      if(UserStore.isloggedIn){
+      if(UserStore.isLoggedIn){
         return (
           <div className="App">
           <Navbar/>
@@ -94,15 +103,13 @@ class App extends React.Component {
         </div>
         );
       }
-
       return (
         <div className="App">
             <div className="container">
-              <LoginForm/>
+              <LoginForm setStatus={this.setStatus}/>
             </div>
         </div>
       )
-
     }
     
   }

@@ -84,7 +84,11 @@ nav{
   padding-left: 0;
   padding-right: 0;
   width: 75vw;
+  display: flex;
+  justify-content: center;
+  align-items: start;
 }
+
 .sidebar{
   width:auto;
   display:flex;

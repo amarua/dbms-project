@@ -1,5 +1,5 @@
 const Borrowers =()=>{
-    const arr=[{Name:'',avlbooks:0,price:''}];
+    //const arr=[{Name:'',avlbooks:0,price:''}];
     return (
         <div className="borrowers">
         <div className="col"><input type="text" placeholder="Search (Enter Roll or Name"></input></div>
