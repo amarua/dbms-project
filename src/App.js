@@ -94,13 +94,15 @@ class App extends React.Component {
     }else{
       if(UserStore.isLoggedIn){
         return (
-          <div className="App">
-          <Navbar/>
-            <div className="container">
-            <Sidebar setContent={this.setContent} choice={this.state.option}/>
-            <Content option={this.state.option} logout={this.doLogout}/>
-            </div>
-        </div>
+         <React.Fragment>
+         <Navbar/>
+         <div className="App">
+           <div className="container">
+           <Sidebar setContent={this.setContent} choice={this.state.option}/>
+           <Content option={this.state.option} logout={this.doLogout}/>
+           </div>
+       </div>
+         </React.Fragment>
         );
       }
       return (

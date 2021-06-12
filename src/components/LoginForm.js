@@ -53,7 +53,7 @@ class LoginForm extends React.Component {
           UserStore.username='';
           UserStore.isLoggedIn=true;
         });
-        //alert(result.msg);
+        alert(result.msg);
       }
     }catch(e){
       runInAction(()=>{
@@ -62,7 +62,7 @@ class LoginForm extends React.Component {
         UserStore.isLoggedIn=true;
       });
       console.log(e);
-      //alert("something went wrong");
+      alert("something went wrong");
     }
   }
 

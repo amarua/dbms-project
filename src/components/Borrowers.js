@@ -1,83 +1,49 @@
+import Borrower from './Borrower';
+import {useState,useEffect} from 'react';
+import {observer} from 'mobx-react';
+// import {runInAction} from 'mobx';
+import BorrowerStore from '../stores/BorrowerStore';
+
 const Borrowers =()=>{
-    //const arr=[{Name:'',avlbooks:0,price:''}];
+    const [allborrowers,SetAllborrowers] =useState(BorrowerStore.Allborrows);
+    const [editID,SeteditID] =useState("");
+    const Changeid =(id)=>{
+       console.log('Edit button clicked');
+      // SetAllborrowers([...allborrowers,{name:"Alvin",
+      // id:"234234234"+"3",
+      // add:"Balurghat",
+      // phn: "8597589685"}]);
+      // runInAction(()=> {
+      //   BorrowerStore.Allborrows.push( {name:"Alvin",
+      //   id:"234234234"+"3",
+      //   add:"Balurghat",
+      //   phn: "8597589685"});
+      // });
+      SeteditID(id);
+    }
+    
     return (
         <div className="borrowers">
-        <div className="col"><input type="text" placeholder="Search (Enter Roll or Name"></input></div>
-        <div className="table-wrapper"> 
-        <table>
-        <thead>
-          <tr>
-              <th>Name</th>
-              <th>Avaliable Stock</th>
-              <th>Item Price</th>
-          </tr>
-        </thead>
+          <div className="row"><input type="text" placeholder="Search (Enter Roll or Name"></input></div>
 
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
-        </div>
+          <div className="row"> 
+            <table>
+            <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>#ID No</th>
+                  <th>Address</th>
+                  <th>Phn No</th>
+                  <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {allborrowers.map(t => <Borrower key={t.id} borrower={t} editID={editID} Changeid={Changeid}/>)}
+            </tbody>
+        </table>
+          </div>
         </div>
     )
 }
-export default Borrowers;
+export default observer(Borrowers);

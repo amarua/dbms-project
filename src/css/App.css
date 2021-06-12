@@ -75,11 +75,12 @@ h2{
 nav{
   position: absolute;
   top: 0;
-  height: 56px;
+  background-color: rgb(110, 139, 231);
+  /* height: 56px; */
 }
 
 .container{
-  height: calc(100vh - 64px);
+  /* height: calc(100vh - 64px); */
   margin-top: 49px;
   padding-left: 0;
   padding-right: 0;
@@ -95,6 +96,7 @@ nav{
   justify-content:space-around;
   margin-left:0;
   position: absolute;
+  top:5rem;
   left: 0;
 }
 .sidebar ul .btn{
@@ -119,9 +121,10 @@ li a,li a:hover{
   width:100%;
   min-height: 90vh;
 }
-.content-wrapper .btn{
+.content-wrapper .logout-btn{
   background-color: #ce3b3b;
   position: absolute;
+  top:5rem;
   right: 0px;
   margin: 5px;
   font-weight: 500;
@@ -137,7 +140,13 @@ li a,li a:hover{
   height:70vh;
   overflow: auto;
 }
-.books table,.borrowers table{
+/* .books table,.borrowers table{
+  width: 100%;
+} */
+.borrowers{
+  margin-top: 10px;
+}
+.borrowers .row{
   width: 90%;
 }
 form p{
@@ -146,7 +155,7 @@ form p{
 .row form {
   display: flex;
   margin-top: 15px;
-  width: 400px;
+  /* width: 400px; */
 }
 .col {
   flex-grow: 0;
@@ -157,4 +166,36 @@ label span{
 form input{
   margin-left: 20px !important;
   min-width: 250px;
+}
+
+.dashboard{
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+}
+.dashboard img{
+  height:200px;
+  width:200px;
+}
+.row>.col>h5{
+  font-weight:700;
+}
+.row>.col>img{
+  box-shadow:0 0 0 10px rgba(69, 243, 121, 0.1);
+}
+.row>.col>img:hover{
+  transform:scale(1.05);
+  border:3px solid rgb(80, 206, 112);
+  cursor: pointer;
+}
+.fa-pencil-square-o:hover, .fa-floppy-o:hover{
+  transform:scale(1.5);
+  color:rgb(241, 105, 42);
+  cursor: pointer;
+}
+.add-book-btn{
+  margin:40px;
+}
+td{
+  width: 190px;
 }
