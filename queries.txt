@@ -1,0 +1,24 @@
+CREATE TABLE `testing`.`borrowers` (
+   `name` VARCHAR(50) NULL,
+   `id` VARCHAR(45) NOT NULL,
+   `address` VARCHAR(100) NOT NULL,
+   `phn` VARCHAR(15) NOT NULL,
+   PRIMARY KEY (`id`),
+   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+   UNIQUE INDEX `phn_UNIQUE` (`phn` ASC) VISIBLE)
+ ENGINE = InnoDB
+
+CREATE TABLE `testing`.`books` (
+  `name` VARCHAR(100) NOT NULL,
+  `author` VARCHAR(45) NOT NULL,
+  `yop` VARCHAR(45) NOT NULL,
+  `publisher` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`name`, `author`));
+
+
+ insert into borrowers (name, id , address,phn) values 
+ ('rohit sarkar', '1232','malda west bengal','9857451212');
+
+
+  insert into books (name,author,yop,publisher) values
+   ('Linear Prog', 'D.C. Sanyal','2010','sons private ltd');

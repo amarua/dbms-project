@@ -4,17 +4,8 @@ const Navbar = (props)=>{
         <React.Fragment>
         <nav>
           <ul className="nav">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Active</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#" aria-disabled="true">Disabled</a>
+            <li className="nav-item ml-5">
+              User: root
             </li>
           </ul>
       </nav>

@@ -6,28 +6,28 @@ class BorrowerStore{
             Allborrows:[
                 {
                   name:"Alvin",
-                  id:"2342314",
+                  id:"23454614",
                   add:"Balurghat",
                   phn: "8597589685"
                 },
                 {
                   name:"rohit",
-                  id:"2343234",
+                  id:"234356234",
                   add:"Balurghat",
                   phn: "8597589685"
                 },
                 {
                   name:"bisal",
-                  id:"2342534",
+                  id:"234265534",
                   add:"Balurghat",
                   phn: "8597589685"
                 },
                 {
                   name:"Alvin",
-                  id:"234234234",
+                  id:"234235434234",
                   add:"Balurghat",
                   phn: "8597589685"
-                },
+                }
               ]
         })
     }
