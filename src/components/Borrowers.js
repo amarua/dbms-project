@@ -22,16 +22,11 @@ const Borrowers =()=>{
       }))
     }
     const addborrower=async ()=>{
-      // console.log(name);
-      // console.log(address);
-      // console.log(phn);
 
-      if(name.length()<3 || address.length()<3 || phn.length()<5){
+      if(name.length<3 || address.length<3 || phn.length<5){
         return;
       }
-      // if(!this.state.password){
-      //   return;
-      // }
+
       try{
         let res =await fetch('/addborrower',{
           method: 'post',
@@ -98,8 +93,8 @@ const Borrowers =()=>{
             </thead>
 
             <tbody>
-              {allborrowers.map(t => 
-                <Borrower key={t.id} borrower={t} editID={editID} Changeid={Changeid}
+              {allborrowers.sort((a,b) =>a.name.localeCompare(b.name)).map(t => 
+                <Borrower key={t.id} borrower={t} editID={editID} Changeid={Changeid} SetAllborrowers={SetAllborrowers}
                 />).slice(0,7)}
             </tbody>
         </table>
@@ -123,4 +118,4 @@ const Borrowers =()=>{
     }
     
 }
-export default observer(Borrowers);
+export default Borrowers;

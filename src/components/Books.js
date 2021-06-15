@@ -1,24 +1,28 @@
 
 import React, { useState } from 'react';
 import Book from './Book';
+import BookStore from '../stores/BookStore';
+import {runInAction} from 'mobx';
 const Books =()=>{
+    const [allbooks,SetAllbooks] =useState(BookStore.Allbooks);
+    const [editID,SeteditID] =useState("");
     const [mode,Setmode]=useState("show");
     const [name,SetName]=useState("");
     const [author,SetAuthor]=useState("");
     const [yop,SetYop]=useState("");
     const [publisher,SetPublisher]=useState("");
     const [quantity,SetQuantity]=useState("");
+
+    const find =(value) =>{
+      SetAllbooks(BookStore.Allbooks.filter(t=>
+        t.name.match(new RegExp("^"+value,"gi"))
+      ));
+    }
     const addbook=async ()=>{
-      // console.log(name);
-      // console.log(address);
-      // console.log(phn);
 
       if(name.length<3 || author.length<3 || yop.length!==4){
         return;
       }
-      // if(!this.state.password){
-      //   return;
-      // }
       try{
         let res =await fetch('/addbook',{
           method: 'post',
@@ -44,32 +48,43 @@ const Books =()=>{
           SetYop('');
           SetPublisher('');
           SetQuantity('');
-          // runInAction(()=> {
-          //   UserStore.username=this.state.username;
-          //   UserStore.isLoggedIn=true;
-          //   this.props.setStatus(true);
-          // });
+          SetAllbooks((prev)=> [...prev,
+            {
+                id:Math.floor(Math.random()*20432),
+                name:name,
+                author:author,
+                quantity:quantity,
+                avaliable:quantity,
+                publisher:publisher,
+                yop:yop
+        }]);
+
+        runInAction(()=>{
+          BookStore.Allbooks=[...BookStore.Allbooks,
+              {
+                  id:Math.floor(Math.random()*20432),
+                  name:name,
+                  author:author,
+                  quantity:quantity,
+                  avaliable:quantity,
+                  publisher:publisher,
+                  yop:yop
+              }]
+        });
+
         }else{
-          // runInAction(()=>{
-          //   UserStore.isLoggedIn=false;
-          //   UserStore.username='';
-          //   UserStore.isLoggedIn=true;
-          // });
           alert("something went wrong");
         }
       }catch(e){
-        // runInAction(()=>{
-        //   UserStore.isLoggedIn=false;
-        //   UserStore.username='';
-        //   UserStore.isLoggedIn=true;
-        // });
         console.log(e);
         alert("something went wrong");
       }
     }
 
 
-
+    const Changeid =(value)=>{
+      SeteditID(value);
+    }
 
     if(mode==="show"){
       return (
@@ -104,7 +119,7 @@ const Books =()=>{
                       <span>com</span>
                   </label>
                   </p>
-                  <input type="text" placeholder="Search"></input>
+                  <input type="text" placeholder="Search" onChange={(e)=>find(e.target.value)}></input>
               </form>
 
               
@@ -114,17 +129,19 @@ const Books =()=>{
               <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Author</th>
+                    <th>Total Quantity</th>
                     <th>Avaliable Stock</th>
-                    <th>Item Price</th>
+                    <th>Publisher</th>
+                    <th>Published In</th>
                     <th>Action</th>
                 </tr>
               </thead>
 
               <tbody>
-                <Book/>
-                <Book/>
-                <Book/>
-                <Book/>
+              {allbooks.sort((a,b)=>a.name.localeCompare(b.name)).map(t => 
+                <Book key={t.id} book={t} editID={editID} Changeid={Changeid} SetAllbooks={SetAllbooks}
+                />).slice(0,7) }
               </tbody>
             </table>
           </div>

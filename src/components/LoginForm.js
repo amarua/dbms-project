@@ -1,7 +1,7 @@
 // import { set } from 'mobx';
 import React from 'react';
 import UserStore from '../stores/UserStore';
-import BorrowerStore from '../stores/BorrowerStore';
+// import BorrowerStore from '../stores/BorrowerStore';
 import SubmitButton from './SubmitButton';
 import {runInAction} from 'mobx';
 import {observer} from 'mobx-react';

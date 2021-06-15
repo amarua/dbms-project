@@ -1,10 +1,9 @@
 import {extendObservable} from 'mobx';
-// import UserStore from './UserStore';
-class BorrowerStore{
+class BookStore{
     constructor(){
       const GetAll=async ()=> {
           try{
-            let res =await fetch('/getborrowers',{
+            let res =await fetch('/getbooks',{
               method: 'post',
               headers: {
                 'Accept': 'application/json',
@@ -16,10 +15,10 @@ class BorrowerStore{
             if(result && result.success){
               //console.log(result.msg);
               extendObservable(this,{
-                Allborrows: result.msg
+                Allbooks: result.msg
               })
             }else{
-              console.log("error to load borrowers");
+              console.log("error to load books");
             }
           }catch(e){
             console.log(e);
@@ -30,4 +29,4 @@ class BorrowerStore{
         
     }
 }
-export default new BorrowerStore();
+export default new BookStore();
