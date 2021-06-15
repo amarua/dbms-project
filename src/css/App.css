@@ -227,3 +227,7 @@ select{
   display:block;
   margin-left: 15px;
 }
+
+input[type="text"]{
+  text-align:center;
+}

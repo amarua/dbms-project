@@ -1,6 +1,7 @@
 // import { set } from 'mobx';
 import React from 'react';
 import UserStore from '../stores/UserStore';
+import BorrowerStore from '../stores/BorrowerStore';
 import SubmitButton from './SubmitButton';
 import {runInAction} from 'mobx';
 import {observer} from 'mobx-react';
@@ -79,11 +80,11 @@ class LoginForm extends React.Component {
       <h2>Log In</h2>
         <div className="form-group">
           <input type="text" className="form-control" placeholder="Enter Username" onChange={this.setusername}
-          value ={this.state.username}/>
+          defaultValue ={this.state.username}/>
         </div>
         <div className="form-group">
           <input type="password" className="form-control" placeholder="Password" onChange={this.setpassword}
-          value={this.state.password}/>
+          defaultValue={this.state.password}/>
         </div>
         <SubmitButton text={'Log In'}  disabled={false} onClick={()=>this.dologin()}/>
       </form>
@@ -92,4 +93,4 @@ class LoginForm extends React.Component {
   }
 };
 
-export default LoginForm;
+export default observer(LoginForm);

@@ -15,9 +15,81 @@ CREATE TABLE `testing`.`books` (
   `publisher` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`name`, `author`));
 
+ALTER TABLE `testing`.`books` 
+ADD COLUMN `quantity` VARCHAR(10) NOT NULL AFTER `publisher`,
+ADD COLUMN `avaliable` VARCHAR(10) NOT NULL AFTER `quantity`,
+ADD COLUMN `id` INT NOT NULL AUTO_INCREMENT AFTER `avaliable`,
+CHANGE COLUMN `author` `author` VARCHAR(80) NOT NULL ,
+CHANGE COLUMN `yop` `yop` VARCHAR(4) NOT NULL ,
+ADD UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE;
+
+
+
+update books set quantity=5 ,avaliable=5 where id=1;
 
  insert into borrowers (name, id , address,phn) values 
  ('rohit sarkar', '1232','malda west bengal','9857451212');
+ insert into borrowers (name, id , address,phn) values 
+ ('Amar Sarkar',1,'Malda',8547125748);
+  insert into borrowers (name, id , address,phn) values 
+('Amitabha Roy',2,'jalpaiguri',9687541258);
+ insert into borrowers (name, id , address,phn) values 
+('Asish Chowdhury',3,'Malda',7125847589);
+ insert into borrowers (name, id , address,phn) values 
+('Anurabha Paul',4,'Baruipur',99574815477);
+ insert into borrowers (name, id , address,phn) values 
+('Anirudha Das',5,'Kolkata',6245874512);
+ insert into borrowers (name, id , address,phn) values 
+('Biswajit Paul',6,'Noth24pargana',9587452158);
+ insert into borrowers (name, id , address,phn) values 
+('Bimal Das',7,'South24Pargana',9874581254);
+ insert into borrowers (name, id , address,phn) values 
+('Chandan Roy',8,'Rajapur',9685748596);
+ insert into borrowers (name, id , address,phn) values 
+('Chiranjit Paul',9,'Kolkata',846651212);
+ insert into borrowers (name, id , address,phn) values 
+('Chaitali Barman',10,'Bankura',874536964);
+ insert into borrowers (name, id , address,phn) values 
+('Kiron Dutta',11,'Birbhum',684596785);
+ insert into borrowers (name, id , address,phn) values 
+('Baisakhi Paul',12,'Asansol',546647595);
+ insert into borrowers (name, id , address,phn) values 
+('David Ghosh',13,'Garia',514652364);
+ insert into borrowers (name, id , address,phn) values 
+('Ashwin Bhattacharya',14,'Jalpaiguri',643510000);
+ insert into borrowers (name, id , address,phn) values 
+('Aditya Roy',15,'Malda',486464365);
+ insert into borrowers (name, id , address,phn) values 
+('Mukul Roy',16,'Kaliaganj',768436547);
+ insert into borrowers (name, id , address,phn) values 
+('Sovan Paul',17,'Malda',745324363);
+ insert into borrowers (name, id , address,phn) values 
+('Mamata Banarjee',18,'West Begnal',641336469);
+ insert into borrowers (name, id , address,phn) values 
+('Nikunja Ghosh',19,'Jalpaiguri',787435646);
+ insert into borrowers (name, id , address,phn) values 
+('Madan Mitra',20,'Kolkata',9758421587);
+ insert into borrowers (name, id , address,phn) values 
+('Dhiman Sarkar',21,'Siliguri',9685745812);
+ insert into borrowers (name, id , address,phn) values 
+('Sourav Sinha',22,'Jalpaiguri',7984578145);
+ insert into borrowers (name, id , address,phn) values 
+('Soumyajit Ghosh',23,'Jalpaiguri',7747895478);
+ insert into borrowers (name, id , address,phn) values 
+('Jyotirmay Barman',24,'Siliguri',9875698712);
+ insert into borrowers (name, id , address,phn) values 
+('Rathin Roy',25,'Malda',8754958215);
+ insert into borrowers (name, id , address,phn) values 
+('Suvonkor Maitra',26,'Kolkata',8754952147);
+ insert into borrowers (name, id , address,phn) values 
+('Nikita Ghosh',27,'Kolkata',7854781236);
+ insert into borrowers (name, id , address,phn) values 
+('Priya Chowdhury',28,'Malda',9854715824);
+ insert into borrowers (name, id , address,phn) values 
+('Pritam Paul',29,'Mlada',7845812579);
+ insert into borrowers (name, id , address,phn) values 
+('Vaskar Roy',30,'Malda',71717171);
+
 
 
   insert into books (name,author,yop,publisher) values

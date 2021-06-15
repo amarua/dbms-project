@@ -5,7 +5,7 @@ const Navbar = (props)=>{
         <nav>
           <ul className="nav">
             <li className="nav-item ml-5">
-              User: root
+              User: {props.user}
             </li>
           </ul>
       </nav>

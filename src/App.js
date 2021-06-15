@@ -31,7 +31,7 @@ class App extends React.Component {
         runInAction(() => {
           UserStore.loading=false;
           UserStore.isLoggedIn=true;
-          UserStore.userName=result.userName;
+          UserStore.userName='root';
         });
         
       }else{
@@ -95,7 +95,7 @@ class App extends React.Component {
       if(UserStore.isLoggedIn){
         return (
          <React.Fragment>
-         <Navbar/>
+         <Navbar user={'root'}/>
          <div className="App">
            <div className="container">
            <Sidebar setContent={this.setContent} choice={this.state.option}/>
