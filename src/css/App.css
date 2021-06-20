@@ -15,7 +15,7 @@ h2{
 }
 .App {
   flex-direction: column;
-  min-height:100vh;
+  min-height: 100vh;
   /* width:100vw; */
   text-align: center;
   display:flex;
@@ -120,6 +120,7 @@ li a,li a:hover{
   display:flex;
   width:100%;
   min-height: 90vh;
+  padding-top: 10px;
 }
 .content-wrapper .logout-btn{
   background-color: #ce3b3b;
@@ -138,11 +139,14 @@ li a,li a:hover{
 .books .table-wrapper,.borrowers .table-wrapper{
   width:90%;
   height:70vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
+
 /* .books table,.borrowers table{
   width: 100%;
 } */
+
 .borrowers{
   margin-top: 10px;
 }
@@ -168,11 +172,11 @@ form input{
   min-width: 250px;
 }
 
-.dashboard{
+/* .dashboard{
   display:flex;
   flex-direction:row;
   justify-content:space-between;
-}
+} */
 .dashboard img{
   height:200px;
   width:200px;
@@ -196,13 +200,23 @@ form input{
 td{
   width: 190px;
 }
-.return-from,.borrow-from{
+.borrow-from{
   position: absolute;
   top:50%;
   left:50%;
   transform: translate(-50%, -50%);
   height:50vh;
   width: 450px;
+}
+.return-from{
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 78vh;
+    width: 60vw;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .search-results{
   background-color: rgb(255, 255, 255);
@@ -230,4 +244,18 @@ select{
 
 input[type="text"],td,th{
   text-align:center;
+}
+table{
+  border: 1px solid #beb5b5;
+}
+.book-cell{
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.book-cell .row{
+  margin:5px;
+}
+span .badge{
+  font-size:12px;
 }

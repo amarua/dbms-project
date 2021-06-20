@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Book from './Book';
 import BookStore from '../stores/BookStore';
 import {runInAction} from 'mobx';
+import Alert from './Alert';
 const Books =()=>{
     const [allbooks,SetAllbooks] =useState(BookStore.Allbooks);
     const [editID,SeteditID] =useState("");
@@ -12,7 +13,7 @@ const Books =()=>{
     const [yop,SetYop]=useState("");
     const [publisher,SetPublisher]=useState("");
     const [quantity,SetQuantity]=useState("");
-
+    const [addstatus,SetAddstatus]=useState(false);
     const find =(value) =>{
       SetAllbooks(BookStore.Allbooks.filter(t=>
         t.name.match(new RegExp("^"+value,"gi"))
@@ -43,6 +44,7 @@ const Books =()=>{
         //console.log(result);
         if(result && result.success){
           console.log("success");
+          SetAddstatus(true);
           SetName('');
           SetAuthor('');
           SetYop('');
@@ -50,7 +52,7 @@ const Books =()=>{
           SetQuantity('');
           SetAllbooks((prev)=> [...prev,
             {
-                id:Math.floor(Math.random()*20432),
+                id: (prev.length+1).toString(),
                 name:name,
                 author:author,
                 quantity:quantity,
@@ -62,7 +64,7 @@ const Books =()=>{
         runInAction(()=>{
           BookStore.Allbooks=[...BookStore.Allbooks,
               {
-                  id:Math.floor(Math.random()*20432),
+                  id: (BookStore.Allbooks.length+1).toString(),
                   name:name,
                   author:author,
                   quantity:quantity,
@@ -127,7 +129,7 @@ const Books =()=>{
           <div className="table-wrapper"> 
             <table>
               <thead>
-                <tr>
+                <tr  className="table-info">
                     <th>Name</th>
                     <th>Author</th>
                     <th>Total Quantity</th>
@@ -139,9 +141,9 @@ const Books =()=>{
               </thead>
 
               <tbody>
-              {allbooks.sort((a,b)=>a.name.localeCompare(b.name)).map(t => 
+              {allbooks.slice(0,7).sort((a,b)=>a.name.localeCompare(b.name)).map(t => 
                 <Book key={t.id} book={t} editID={editID} Changeid={Changeid} SetAllbooks={SetAllbooks}
-                />).slice(0,7) }
+                />) }
               </tbody>
             </table>
           </div>
@@ -152,6 +154,7 @@ const Books =()=>{
       return (<React.Fragment>
         <button className="btn btn-primary m-4" onClick={()=>Setmode("show")}>Back</button>
         <div className="borrow-from">
+        {addstatus? <Alert type="success" msg="Book Addred"/>:null}
           <form className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onSubmit={(e)=>e.preventDefault()}>
               <input type="text" placeholder="Book Name" onChange={(e)=>SetName(e.target.value) } value={name}></input>
               <input type="text" placeholder="Author" onChange={(e)=>SetAuthor(e.target.value)} value={author}></input>

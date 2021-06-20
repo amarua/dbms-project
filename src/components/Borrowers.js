@@ -1,8 +1,9 @@
 import Borrower from './Borrower';
 import {useState} from 'react';
 import {observer} from 'mobx-react';
-// import {runInAction} from 'mobx';
+import {runInAction} from 'mobx';
 import React from 'react';
+import Alert from './Alert';
 import BorrowerStore from '../stores/BorrowerStore';
 
 const Borrowers =()=>{
@@ -12,6 +13,7 @@ const Borrowers =()=>{
     const [name,SetName] =useState('');
     const [address,SetAddress] =useState('');
     const [phn,SetPhn] =useState('');
+    const [addstatus,SetAddstatus]=useState(false);
     const Changeid =(id)=>{
       SeteditID(id);
     }
@@ -44,31 +46,36 @@ const Borrowers =()=>{
         let result = await res.json();
         //console.log(result);
         if(result && result.success){
+          SetAddstatus(true);
           console.log("success");
           SetName('');
           SetAddress('');
           SetPhn('');
-          // runInAction(()=> {
-          //   UserStore.username=this.state.username;
-          //   UserStore.isLoggedIn=true;
-          //   this.props.setStatus(true);
-          // });
+
+          SetAllborrowers((prev)=> [...prev,
+            {
+                id: (prev.length+1).toString(),
+                name:name,
+                address:address,
+                phn:phn
+        }]);
+
+        runInAction(()=>{
+          BorrowerStore.Allborrows=[...BorrowerStore.Allborrows,
+              {
+                id: (BorrowerStore.Allborrows.length+1).toString(),
+                name:name,
+                address:address,
+                phn:phn
+              }]
+        });
+
         }else{
-          // runInAction(()=>{
-          //   UserStore.isLoggedIn=false;
-          //   UserStore.username='';
-          //   UserStore.isLoggedIn=true;
-          // });
-          alert("something went wrong");
+          console.log("something went wrong");
         }
       }catch(e){
-        // runInAction(()=>{
-        //   UserStore.isLoggedIn=false;
-        //   UserStore.username='';
-        //   UserStore.isLoggedIn=true;
-        // });
         console.log(e);
-        alert("something went wrong");
+        console.log("something went wrong");
       }
     }
     if(mode==="show"){
@@ -80,10 +87,10 @@ const Borrowers =()=>{
           <div className="row">
             <input type="text" placeholder="Search (Enter id or Name)" onChange={(e)=>search(e.target.value)}></input>
           </div>        
-          <div className="row"> 
+          <div className="table-wrapper"> 
             <table>
             <thead>
-              <tr>
+              <tr className="table-info">
                   <th>Name</th>
                   <th>#ID No</th>
                   <th>Address</th>
@@ -95,7 +102,7 @@ const Borrowers =()=>{
             <tbody>
               {allborrowers.sort((a,b) =>a.name.localeCompare(b.name)).map(t => 
                 <Borrower key={t.id} borrower={t} editID={editID} Changeid={Changeid} SetAllborrowers={SetAllborrowers}
-                />).slice(0,7)}
+                />)}
             </tbody>
         </table>
           </div>
@@ -106,6 +113,7 @@ const Borrowers =()=>{
         <React.Fragment>
           <button className="btn btn-primary m-4" onClick={()=>Setmode("show")}>Back</button>
           <div className="borrow-from">
+          {addstatus?<Alert type="success" msg="New Borrower Created"/>:null}
             <form className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onSubmit={(e)=>e.preventDefault()}>
                 <input type="text" placeholder="Borrower Name" onChange={(e)=>SetName(e.target.value)} value={name}></input>
                 <input type="text" placeholder="Address" onChange={(e)=>SetAddress(e.target.value)} value={address}></input>

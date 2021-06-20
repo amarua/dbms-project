@@ -19,8 +19,14 @@ class BookStore{
               })
             }else{
               console.log("error to load books");
+              extendObservable(this,{
+                Allbooks: []
+              })
             }
           }catch(e){
+            extendObservable(this,{
+              Allbooks: []
+            })
             console.log(e);
           }
       }

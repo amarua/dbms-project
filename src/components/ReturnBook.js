@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import {observer} from 'mobx-react';
+import Borrows from './Borrows';
 import BorrowingStore from '../stores/BorrowingStore';
 const ReturnBook=()=>{
     const [results,Setresult]=useState([]);
@@ -26,7 +27,7 @@ const ReturnBook=()=>{
                 <input type="text" placeholder="Enter bookname or borrower name" onChange={(e)=>find(e.target.value)}></input>
             </form>
             <div className="search-results">
-                {results.map(t =>{
+                {results.slice(0,5).map(t =>{
                     return(
                         <div className="result-cell" key={t.id} onClick={()=>Breturn(t.id)}>
                             <span className="result">{t.borrower}</span>
@@ -34,16 +35,29 @@ const ReturnBook=()=>{
                             <span className="result">{t.author})</span>
                             <br/>
                         </div>)
-                }).slice(0,5)}
+                })}
             </div>
+
+            <table>
+              <thead>
+                <tr  className="table-info">
+                    <th>Book</th>
+                    <th>Borrower</th>
+                    <th>Date Borrowed</th>
+                    <th>Returning Date</th>
+                    <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+              {BorrowingStore.Allborrowing.slice(0,7).map(t =>{
+                return(
+                    <Borrows/>)
+            })}
+              </tbody>
+            </table>
         </div>
     );
 }
 
-// const searchWithName={
-//     fontWidth:600
-// }
-// const searchWithName={
-//     fontWidth:400
-// }
 export default observer(ReturnBook);

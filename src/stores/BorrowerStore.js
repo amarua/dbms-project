@@ -19,9 +19,15 @@ class BorrowerStore{
                 Allborrows: result.msg
               })
             }else{
+              extendObservable(this,{
+                Allborrows: []
+              })
               console.log("error to load borrowers");
             }
           }catch(e){
+            extendObservable(this,{
+              Allborrows: []
+            })
             console.log(e);
           }
       }

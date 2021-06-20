@@ -9,9 +9,6 @@ const Book = ({book,editID,Changeid,SetAllbooks}) => {
     const avl=book.avaliable;
     const pub=book.quantity;
     const editbook=async (id)=>{
-        // console.log(name);
-        // console.log(address);
-        // console.log(phn);
   
         if(editName.length<3 || editAuthor.length<3 || editpublisher.length<4 ||edityop.length!==4){
           return;
