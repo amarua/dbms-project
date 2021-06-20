@@ -8,7 +8,7 @@ const Books =()=>{
     const [allbooks,SetAllbooks] =useState(BookStore.Allbooks);
     const [editID,SeteditID] =useState("");
     const [mode,Setmode]=useState("show");
-    const [name,SetName]=useState("");
+    const [book_name,SetName]=useState("");
     const [author,SetAuthor]=useState("");
     const [yop,SetYop]=useState("");
     const [publisher,SetPublisher]=useState("");
@@ -16,12 +16,12 @@ const Books =()=>{
     const [addstatus,SetAddstatus]=useState(false);
     const find =(value) =>{
       SetAllbooks(BookStore.Allbooks.filter(t=>
-        t.name.match(new RegExp("^"+value,"gi"))
+        t.book_name.match(new RegExp("^"+value,"gi"))
       ));
     }
     const addbook=async ()=>{
 
-      if(name.length<3 || author.length<3 || yop.length!==4){
+      if(book_name.length<3 || author.length<3 || yop.length!==4){
         return;
       }
       try{
@@ -32,7 +32,7 @@ const Books =()=>{
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            name, 
+            book_name, 
             author,
             yop, 
             publisher,
@@ -52,8 +52,8 @@ const Books =()=>{
           SetQuantity('');
           SetAllbooks((prev)=> [...prev,
             {
-                id: (prev.length+1).toString(),
-                name:name,
+                book_id: (prev.length+1).toString(),
+                book_name:book_name,
                 author:author,
                 quantity:quantity,
                 avaliable:quantity,
@@ -64,8 +64,8 @@ const Books =()=>{
         runInAction(()=>{
           BookStore.Allbooks=[...BookStore.Allbooks,
               {
-                  id: (BookStore.Allbooks.length+1).toString(),
-                  name:name,
+                  book_id: (BookStore.Allbooks.length+1).toString(),
+                  book_name:book_name,
                   author:author,
                   quantity:quantity,
                   avaliable:quantity,
@@ -130,7 +130,7 @@ const Books =()=>{
             <table>
               <thead>
                 <tr  className="table-info">
-                    <th>Name</th>
+                    <th>Book Name</th>
                     <th>Author</th>
                     <th>Total Quantity</th>
                     <th>Avaliable Stock</th>
@@ -141,8 +141,8 @@ const Books =()=>{
               </thead>
 
               <tbody>
-              {allbooks.slice(0,7).sort((a,b)=>a.name.localeCompare(b.name)).map(t => 
-                <Book key={t.id} book={t} editID={editID} Changeid={Changeid} SetAllbooks={SetAllbooks}
+              {allbooks.slice(0,7).sort((a,b)=>a.book_name.localeCompare(b.book_name)).map(t => 
+                <Book key={t.book_id} book={t} editID={editID} Changeid={Changeid} SetAllbooks={SetAllbooks}
                 />) }
               </tbody>
             </table>
@@ -156,7 +156,7 @@ const Books =()=>{
         <div className="borrow-from">
         {addstatus? <Alert type="success" msg="Book Addred"/>:null}
           <form className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onSubmit={(e)=>e.preventDefault()}>
-              <input type="text" placeholder="Book Name" onChange={(e)=>SetName(e.target.value) } value={name}></input>
+              <input type="text" placeholder="Book Name" onChange={(e)=>SetName(e.target.value) } value={book_name}></input>
               <input type="text" placeholder="Author" onChange={(e)=>SetAuthor(e.target.value)} value={author}></input>
               <input type="text" placeholder="year of publish" onChange={(e)=>SetYop(e.target.value)} value={yop}></input>
               <input type="text" placeholder="publisher" onChange={(e)=>SetPublisher(e.target.value)} value={publisher}></input>

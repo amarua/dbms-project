@@ -52,7 +52,7 @@ const ReturnBook=()=>{
               <tbody>
               {BorrowingStore.Allborrowing.slice(0,7).map(t =>{
                 return(
-                    <Borrows/>)
+                    <Borrows key={t.id}/>)
             })}
               </tbody>
             </table>

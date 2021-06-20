@@ -10,22 +10,22 @@ const Borrowers =()=>{
     const [allborrowers,SetAllborrowers] =useState(BorrowerStore.Allborrows);
     const [editID,SeteditID] =useState("");
     const [mode,Setmode] =useState("show");
-    const [name,SetName] =useState('');
+    const [borrower_name,SetName] =useState('');
     const [address,SetAddress] =useState('');
     const [phn,SetPhn] =useState('');
     const [addstatus,SetAddstatus]=useState(false);
-    const Changeid =(id)=>{
-      SeteditID(id);
+    const Changeid =(borrower_id)=>{
+      SeteditID(borrower_id);
     }
 
     const search=(value) =>{
       SetAllborrowers(BorrowerStore.Allborrows.filter((t)=>{
-        return t.name.match(new RegExp("^"+value,"gi"));
+        return t.borrower_name.match(new RegExp("^"+value,"gi"));
       }))
     }
     const addborrower=async ()=>{
 
-      if(name.length<3 || address.length<3 || phn.length<5){
+      if(borrower_name.length<3 || address.length<3 || phn.length<5){
         return;
       }
 
@@ -37,7 +37,7 @@ const Borrowers =()=>{
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            name, 
+            borrower_name, 
             address,
             phn
           })
@@ -54,8 +54,8 @@ const Borrowers =()=>{
 
           SetAllborrowers((prev)=> [...prev,
             {
-                id: (prev.length+1).toString(),
-                name:name,
+                borrower_id: (prev.length+1).toString(),
+                borrower_name:borrower_name,
                 address:address,
                 phn:phn
         }]);
@@ -63,8 +63,8 @@ const Borrowers =()=>{
         runInAction(()=>{
           BorrowerStore.Allborrows=[...BorrowerStore.Allborrows,
               {
-                id: (BorrowerStore.Allborrows.length+1).toString(),
-                name:name,
+                borrower_id: (BorrowerStore.Allborrows.length+1).toString(),
+                borrower_name:borrower_name,
                 address:address,
                 phn:phn
               }]
@@ -85,14 +85,14 @@ const Borrowers =()=>{
                   New Borrower
           </button>
           <div className="row">
-            <input type="text" placeholder="Search (Enter id or Name)" onChange={(e)=>search(e.target.value)}></input>
+            <input type="text" placeholder="Search (Enter borrower id or borrower name)" onChange={(e)=>search(e.target.value)}></input>
           </div>        
           <div className="table-wrapper"> 
             <table>
             <thead>
               <tr className="table-info">
                   <th>Name</th>
-                  <th>#ID No</th>
+                  <th>#ID</th>
                   <th>Address</th>
                   <th>Phn No</th>
                   <th>Action</th>
@@ -100,8 +100,8 @@ const Borrowers =()=>{
             </thead>
 
             <tbody>
-              {allborrowers.sort((a,b) =>a.name.localeCompare(b.name)).map(t => 
-                <Borrower key={t.id} borrower={t} editID={editID} Changeid={Changeid} SetAllborrowers={SetAllborrowers}
+              {allborrowers.sort((a,b) =>a.borrower_name.localeCompare(b.borrower_name)).map(t => 
+                <Borrower key={t.borrower_id} borrower={t} editID={editID} Changeid={Changeid} SetAllborrowers={SetAllborrowers}
                 />)}
             </tbody>
         </table>
@@ -115,7 +115,7 @@ const Borrowers =()=>{
           <div className="borrow-from">
           {addstatus?<Alert type="success" msg="New Borrower Created"/>:null}
             <form className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onSubmit={(e)=>e.preventDefault()}>
-                <input type="text" placeholder="Borrower Name" onChange={(e)=>SetName(e.target.value)} value={name}></input>
+                <input type="text" placeholder="Borrower borrower_name" onChange={(e)=>SetName(e.target.value)} value={borrower_name}></input>
                 <input type="text" placeholder="Address" onChange={(e)=>SetAddress(e.target.value)} value={address}></input>
                 <input type="text" placeholder="Phone No" onChange={(e)=>SetPhn(e.target.value)} value={phn}></input>
                 <button type="submit" className="btn btn-primary mt-5" onClick={()=>addborrower()}>Submit</button>
