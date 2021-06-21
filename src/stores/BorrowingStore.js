@@ -2,42 +2,38 @@ import {extendObservable} from 'mobx';
 
 class BorrowingStore{
     constructor(){
-        extendObservable(this,{
-            Allborrowing:[
-                {
-                    date:"12-12-2000",
-                    borrower:"rohit",
-                    book:"data stucture",
-                    author:"sk datta",
-                    due:"20-10-2000",
-                    id:"102"
-                },
-                {
-                    date:"12-12-2000",
-                    borrower:"rihan",
-                    book:"resource management Techniques",
-                    author:"mohit biswas",
-                    due:"20-10-2000",
-                    id:"182"
-                },
-                {
-                    date:"12-12-2000",
-                    borrower:"risab",
-                    book:"graph theory",
-                    author:"bisal sen",
-                    due:"20-10-2000",
-                    id:"122"
-                },
-                {
-                    date:"12-12-2000",
-                    borrower:"rina",
-                    book:"algorithm analysis",
-                    author:"amit pal",
-                    due:"20-10-2000",
-                    id:"132"
+        const GetAll=async ()=> {
+            try{
+              let res =await fetch('/getborrow_records',{
+                method: 'post',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
                 }
-              ]
-        })
-    }
+              });
+        
+              let result = await res.json();
+              if(result && result.success){
+                //console.log(result.msg);
+                extendObservable(this,{
+                    Allborrowing: result.msg
+                })
+              }else{
+                extendObservable(this,{
+                    Allborrowing: []
+                })
+                console.log("error to load borrowers");
+              }
+            }catch(e){
+              extendObservable(this,{
+                Allborrowing: []
+              })
+              console.log(e);
+            }
+        }
+  
+        GetAll();
+          
+      }
 }
 export default new BorrowingStore();

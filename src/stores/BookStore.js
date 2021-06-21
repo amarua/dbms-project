@@ -32,7 +32,6 @@ class BookStore{
       }
 
       GetAll();
-        
     }
 }
 export default new BookStore();

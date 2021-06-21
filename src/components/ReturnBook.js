@@ -3,40 +3,27 @@ import {observer} from 'mobx-react';
 import Borrows from './Borrows';
 import BorrowingStore from '../stores/BorrowingStore';
 const ReturnBook=()=>{
-    const [results,Setresult]=useState([]);
-    const find=(e)=>{
-        if(e==='' || e===null){
-            Setresult([]);
-            return;
-        }
-        Setresult(BorrowingStore.Allborrowing.filter(x=> 
-            {
-                if(x.borrower.match(new RegExp("^"+e))||x.book.match(new RegExp("^"+e))){
-                    return true;
-                }
-                return false;
-            }));
-    }
+    const [results,Setresult]=useState(BorrowingStore.Allborrowing);
+    const find=(value)=>{
+      var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.\\";
+      for (var i = 0; i < specialChars.length; i++) {
+          value = value.replace(new RegExp("\\" + specialChars[i], "gi"), "");
+      }
+        Setresult(BorrowingStore.Allborrowing.filter((t)=>
+          t.borrower_name.match(new RegExp("[a-zA-Z]*"+value,"gi"))||t.book_name.match(new RegExp("[a-zA-Z]*"+value,"gi"))
+        ));
+      }
 
     const Breturn=(id)=>{
         console.log(id);
     }
+    
     return (
         <div className="return-from">
             <form>
                 <input type="text" placeholder="Enter bookname or borrower name" onChange={(e)=>find(e.target.value)}></input>
             </form>
-            <div className="search-results">
-                {results.slice(0,5).map(t =>{
-                    return(
-                        <div className="result-cell" key={t.id} onClick={()=>Breturn(t.id)}>
-                            <span className="result">{t.borrower}</span>
-                            <span className="result">({t.book}</span>
-                            <span className="result">{t.author})</span>
-                            <br/>
-                        </div>)
-                })}
-            </div>
+            
 
             <table>
               <thead>
@@ -50,9 +37,9 @@ const ReturnBook=()=>{
               </thead>
 
               <tbody>
-              {BorrowingStore.Allborrowing.slice(0,7).map(t =>{
+              {results.sort((a,b) =>b.status ==='returned'?-1:1).map(t =>{
                 return(
-                    <Borrows key={t.id}/>)
+                    <Borrows key={t.borrowing_id} record={t} Setresult={Setresult}/>)
             })}
               </tbody>
             </table>
@@ -60,4 +47,4 @@ const ReturnBook=()=>{
     );
 }
 
-export default observer(ReturnBook);
+export default ReturnBook;

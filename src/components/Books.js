@@ -15,8 +15,12 @@ const Books =()=>{
     const [quantity,SetQuantity]=useState("");
     const [addstatus,SetAddstatus]=useState(false);
     const find =(value) =>{
+      var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.\\";
+      for (var i = 0; i < specialChars.length; i++) {
+        value = value.replace(new RegExp("\\" + specialChars[i], "gi"), "");
+      }
       SetAllbooks(BookStore.Allbooks.filter(t=>
-        t.book_name.match(new RegExp("^"+value,"gi"))
+        t.book_name.match(new RegExp("[a-zA-Z]*"+value,"gi"))
       ));
     }
     const addbook=async ()=>{
@@ -141,7 +145,7 @@ const Books =()=>{
               </thead>
 
               <tbody>
-              {allbooks.slice(0,7).sort((a,b)=>a.book_name.localeCompare(b.book_name)).map(t => 
+              {allbooks.slice(0,20).sort((a,b)=>a.book_name.localeCompare(b.book_name)).map(t => 
                 <Book key={t.book_id} book={t} editID={editID} Changeid={Changeid} SetAllbooks={SetAllbooks}
                 />) }
               </tbody>

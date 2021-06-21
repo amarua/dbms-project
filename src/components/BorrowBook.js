@@ -15,27 +15,35 @@ const BorrowBook=()=>{
     const [Requeststatus,SetRequeststatus]=useState(false);
     const searchborrower=(value) =>{
         SetBorrowername(value);
+        SetRequeststatus(false);
         if(value==='' || value.length===0){
             SetAllborrowers([]);
             return ;
         }
-        if(value.search("\\)") ===-1 && value.search("\\(")===-1){
-            SetAllborrowers(BorrowerStore.Allborrows.filter((t)=>
-                t.borrower_name.match(new RegExp("^"+value,"gi"))
-            ));
+        var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.\\";
+        for (var i = 0; i < specialChars.length; i++) {
+            value = value.replace(new RegExp("\\" + specialChars[i], "gi"), "");
         }
+        SetAllborrowers(BorrowerStore.Allborrows.filter((t)=>
+            t.borrower_name.match(new RegExp("[a-zA-Z]*"+value,"gi"))
+        ));
         
     }
 
     const searchbook =(value) =>{
+        SetRequeststatus(false);
         SetBookname(value);
         if(value==='' || value.length===0){
             SetAllbooks([]);
             return;
         }
+        var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.\\";
+        for (var i = 0; i < specialChars.length; i++) {
+            value = value.replace(new RegExp("\\" + specialChars[i], "gi"), "");
+        }
         if(value.search("\\)") ===-1 && value.search("\\(")===-1){
             SetAllbooks(BookStore.Allbooks.filter( (t) =>
-                t.book_name.match(new RegExp("^"+value,"gi"))
+                t.book_name.match(new RegExp("[a-zA-Z]*"+value,"gi"))&&(t.avaliable>0)
             ));
         }
 
@@ -54,13 +62,13 @@ const BorrowBook=()=>{
     }
 
     const BorrowRequest=async ()=>{
-        if(borrower_id.length<1 || book_id.length<1 || days<1){
-            console.log("uessdf")
+        if(borrower_id.length<1 || book_id.length<1 || days===0){
+            // console.log("uessdf")
           return;
         }  
         try{
             let d=new Date();
-            let borrow_date=d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear();
+            let borrow_date=d.getFullYear()+"/"+d.getMonth()+"/"+d.getDate();
             let res =await fetch('/borrowrRequest',{
                 method: 'post',
                 headers: {
@@ -81,31 +89,8 @@ const BorrowBook=()=>{
           if(result && result.success){
             SetRequeststatus(true);
             SetBookname('');
-            borrowername('');
-            //     SetAddstatus(true);
-            //     console.log("success");
-            //     SetName('');
-            //     SetAddress('');
-            //     SetPhn('');
-    
-            //     SetAllborrowers((prev)=> [...prev,
-            //       {
-            //           borrower_id: (prev.length+1).toString(),
-            //           borrower_name:borrower_name,
-            //           address:address,
-            //           phn:phn
-            //   }]);
-    
-            //   runInAction(()=>{
-            //     BorrowerStore.Allborrows=[...BorrowerStore.Allborrows,
-            //         {
-            //           borrower_id: (BorrowerStore.Allborrows.length+1).toString(),
-            //           borrower_name:borrower_name,
-            //           address:address,
-            //           phn:phn
-            //         }]
-            //   });
-    
+            SetBorrowername('');
+            console.log("success");
             }else{
                 console.log("something went wrong");
             }

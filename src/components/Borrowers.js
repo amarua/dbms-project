@@ -19,8 +19,12 @@ const Borrowers =()=>{
     }
 
     const search=(value) =>{
+      var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.\\";
+      for (var i = 0; i < specialChars.length; i++) {
+        value = value.replace(new RegExp("\\" + specialChars[i], "gi"), "");
+      }
       SetAllborrowers(BorrowerStore.Allborrows.filter((t)=>
-        t.borrower_name.match(new RegExp("^"+value,"gi"))
+        t.borrower_name.match(new RegExp("[a-zA-Z]*"+value,"gi"))
       ));
     }
     const addborrower=async ()=>{
@@ -100,7 +104,7 @@ const Borrowers =()=>{
             </thead>
 
             <tbody>
-              {allborrowers.sort((a,b) =>a.borrower_name.localeCompare(b.borrower_name)).map(t => 
+              {allborrowers.slice(0,20).sort((a,b) =>a.borrower_name.localeCompare(b.borrower_name)).map(t => 
                 <Borrower key={t.borrower_id} borrower={t} editID={editID} Changeid={Changeid} SetAllborrowers={SetAllborrowers}
                 />)}
             </tbody>
