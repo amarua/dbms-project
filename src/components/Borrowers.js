@@ -19,9 +19,9 @@ const Borrowers =()=>{
     }
 
     const search=(value) =>{
-      SetAllborrowers(BorrowerStore.Allborrows.filter((t)=>{
-        return t.borrower_name.match(new RegExp("^"+value,"gi"));
-      }))
+      SetAllborrowers(BorrowerStore.Allborrows.filter((t)=>
+        t.borrower_name.match(new RegExp("^"+value,"gi"))
+      ));
     }
     const addborrower=async ()=>{
 

@@ -259,3 +259,17 @@ table{
 span .badge{
   font-size:12px;
 }
+.search-resul{
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+}
+.search-resul:hover{
+  background-color:rgb(114, 210, 240);
+}
+.search-result-container{
+  max-height: 150px;
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+  border-radius: 10px;
+}

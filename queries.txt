@@ -118,3 +118,31 @@ ADD PRIMARY KEY (`book_id`);
   `borrower_id` INT NOT NULL,
   UNIQUE INDEX `borrowing_id_UNIQUE` (`borrowing_id` ASC) VISIBLE,
   PRIMARY KEY (`borrowing_id`));
+
+DELIMITER $$
+CREATE TRIGGER borrowing_after_insert AFTER INSERT ON borrowings
+for each row
+begin
+	update books 
+    set books.avaliable= books.avaliable-1
+    where books.book_id =new.book_id;
+end $$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE TRIGGER borrowings_after_update
+	after update on borrowings
+    for each row
+begin
+	update books set
+    books.avaliable =books.avaliable+1
+    where books.book_id=old.book_id and new.status='returned';
+end $$
+
+DELIMITER ;
+
+
+INSERT INTO `testing`.`borrowings` 
+(`borrowing_id`, `borrow_date`, `return_date`, `status`, `book_id`, `borrower_id`) 
+VALUES ('1', '2021/6/21', '2021/6/28', 'pending', '1', '1');
