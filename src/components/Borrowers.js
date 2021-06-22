@@ -1,6 +1,6 @@
 import Borrower from './Borrower';
 import {useState} from 'react';
-import {observer} from 'mobx-react';
+// import {observer} from 'mobx-react';
 import {runInAction} from 'mobx';
 import React from 'react';
 import Alert from './Alert';

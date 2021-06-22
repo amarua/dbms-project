@@ -24,33 +24,31 @@ const Borrows =({record,Setrecord})=>{
           if(result && result.success){
             console.log("success");
             setStatus('success');
-            Setrecord((prev)=> [...prev.filter(t=> t.borrowing_id!==record.borrowing_id),
-                {
-                    borrowing_id:record.borrowing_id,
-                    borrower_name:record.borrower_name,
-                    author:record.author,
-                    book_name: record.book_name,
-                    borrow_date: record.borrow_date,
-                    return_date: record.return_date,
-                    status: 'reterned'
-            }]);
-            // runInAction(()=>{
-            // BookStore.Allbooks=[...BookStore.Allbooks.filter(t=> {
-            //     if(t.book_name!==record.book_name){
-            //         return true;
-            //     }else{
-            //         t.avaliable+=1;
-            //         return true;
-            //     }
-            // })]
-            // });
+            runInAction(()=>{
+              for( let i in BorrowingStore.Allborrowing){
+                if(BorrowingStore.Allborrowing[i].borrowing_id===record.borrowing_id){
+                  BorrowingStore.Allborrowing[i].status='reterned';
+                  break;
+                }
+              }
+            });
+
+            runInAction(()=>{
+              // console.log('inside runInAction update book');
+              for( let i in BookStore.Allbooks){
+                if(BookStore.Allbooks[i].book_name===record.book_name){
+                  BookStore.Allbooks[i].avaliable=parseInt(BookStore.Allbooks[i].avaliable)+1;
+                  break;
+                }
+              }
+            });
 
           }else{
-            console.log("something went wrong");
+            console.log("something went wrong else block");
           }
         }catch(e){
           console.log(e);
-          console.log("something went wrong");
+          console.log("something went wrong catch block");
         }
       }
 

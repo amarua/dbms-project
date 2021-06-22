@@ -1,6 +1,8 @@
 import React,{useState} from 'react';
+import {runInAction} from 'mobx';
 import BorrowerStore from '../stores/BorrowerStore';
 import BookStore from '../stores/BookStore';
+import BorrowingStore from '../stores/BorrowingStore';
 import BookSearchResult from './BookSearchResult';
 import BorrowerSearchResult from './BorrowerSearchResult';
 import Alert from './Alert';
@@ -87,16 +89,28 @@ const BorrowBook=()=>{
           let result = await res.json();
           //console.log(result);
           if(result && result.success){
-            SetRequeststatus(true);
-            SetBookname('');
-            SetBorrowername('');
-            console.log("success");
+                SetRequeststatus(true);
+                SetBookname('');
+                SetBorrowername('');
+                console.log("success");
+
+                runInAction(()=>{
+                    console.log('inside runInAction request borrow book');
+                    BorrowingStore.Allborrowing=result.msg;
+                    for( let i in BookStore.Allbooks){
+                        if(BookStore.Allbooks[i].book_id===book_id){
+                          BookStore.Allbooks[i].avaliable=parseInt(BookStore.Allbooks[i].avaliable)-1;
+                          break;
+                        }
+                    }
+                });
+
             }else{
                 console.log("something went wrong");
             }
             }catch(e){
-            console.log(e);
-            console.log("something went wrong");
+                console.log(e);
+                console.log("something went wrong");
             }
         }
 

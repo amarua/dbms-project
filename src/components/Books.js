@@ -137,7 +137,7 @@ const Books =()=>{
                     <th>Book Name</th>
                     <th>Author</th>
                     <th>Total Quantity</th>
-                    <th>Avaliable Stock</th>
+                    <th>Available Stock</th>
                     <th>Publisher</th>
                     <th>Published In</th>
                     <th>Action</th>

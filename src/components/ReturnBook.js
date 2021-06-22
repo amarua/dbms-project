@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {observer} from 'mobx-react';
+// import {observer} from 'mobx-react';
 import Borrows from './Borrows';
 import BorrowingStore from '../stores/BorrowingStore';
 const ReturnBook=()=>{
@@ -13,10 +13,6 @@ const ReturnBook=()=>{
           t.borrower_name.match(new RegExp("[a-zA-Z]*"+value,"gi"))||t.book_name.match(new RegExp("[a-zA-Z]*"+value,"gi"))
         ));
       }
-
-    const Breturn=(id)=>{
-        console.log(id);
-    }
     
     return (
         <div className="return-from">
