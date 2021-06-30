@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 // Parent is Return Book
 import {runInAction} from 'mobx';
 import BorrowingStore from '../stores/BorrowingStore';
@@ -74,8 +75,8 @@ const Borrows =({record,Setrecord})=>{
                 </div>
             </td>
             <td>{record.borrower_name}</td>
-            <td>{record.borrow_date.substr(0,record.borrow_date.search("T"))}</td>
-            <td>{record.return_date.substr(0,record.return_date.search("T"))}</td>
+            <td>{moment(record.borrow_date).format('DD-MM-YYYY')}</td>
+            <td>{moment(record.return_date).format('DD-MM-YYYY')}</td>
             <td><button className="btn" style={styles2}
             onClick={()=> mark_as_return()} disabled={status==='danger'?false:true}>mark as return</button></td>
         </tr>
