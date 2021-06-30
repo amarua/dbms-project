@@ -69,7 +69,7 @@ const Borrows =({record,Setrecord})=>{
                     <div className="row">
                         <div className="col font-weight-bold">Status: </div>
                         <div  className="col">
-                            <span className={statusStyle} style={styles1}>{record.status}</span>
+                            <span className={statusStyle} style={styles1}>{status==='danger'?'pending':'returned'}</span>
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ import BorrowingStore from '../stores/BorrowingStore';
 import BookSearchResult from './BookSearchResult';
 import BorrowerSearchResult from './BorrowerSearchResult';
 import Alert from './Alert';
+import moment from 'moment';
 const BorrowBook=()=>{
     const [bookname,SetBookname]=useState('');
     const [borrowername,SetBorrowername]=useState('');
@@ -69,8 +70,8 @@ const BorrowBook=()=>{
           return;
         }  
         try{
-            let d=new Date();
-            let borrow_date=d.getFullYear()+"/"+d.getMonth()+"/"+d.getDate();
+            //let d=new Date();
+            //let borrow_date=d.getFullYear()+"/"+d.getMonth()+"/"+d.getDate();
             let res =await fetch('/borrowrRequest',{
                 method: 'post',
                 headers: {
@@ -81,7 +82,7 @@ const BorrowBook=()=>{
                     borrower_id: borrower_id,
                     book_id: book_id,
                     status:'pending',
-                    borrow_date: borrow_date,
+                    borrow_date: moment().format('YYYY/MM/DD'),
                     borrow_for: days
                 })
             });
