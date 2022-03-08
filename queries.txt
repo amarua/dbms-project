@@ -146,3 +146,8 @@ DELIMITER ;
 INSERT INTO `testing`.`borrowings` 
 (`borrowing_id`, `borrow_date`, `return_date`, `status`, `book_id`, `borrower_id`) 
 VALUES ('1', '2021/6/21', '2021/6/28', 'pending', '1', '1');
+
+
+
+
+**************************************************************************************************************
