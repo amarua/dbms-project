@@ -65,7 +65,7 @@ const BorrowBook=()=>{
     }
 
     const BorrowRequest=async ()=>{
-        if(borrower_id.length<1 || book_id.length<1 || days===0){
+        if(borrower_id.length<1 || book_id.length<1 || parseInt(days)===0){
             // console.log("uessdf")
           return;
         }  
